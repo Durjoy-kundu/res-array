@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Reserve a Table – Array Brasserie & Grill</title>
+  <meta name="description" content="Reserve your table at Array Brasserie & Grill in Essex. Book online instantly."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #09090b; --deep: #111113; --card: #17171a;
+      --gold: #c8a45a; --gold-lt: #e0c47e; --gold-dim: #6b5830;
+      --cream: #f4efe6; --muted: #88887f; --border: rgba(200,164,90,.16);
+      --ff-serif: 'Cormorant Garamond', Georgia, serif;
+      --ff-sans: 'Jost', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--cream); font-family: var(--ff-sans); font-weight: 300; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Header */
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.6rem 4rem; transition: all .4s ease; }
+    header.scrolled { background: rgba(9,9,11,.96); backdrop-filter: blur(14px); padding: 1rem 4rem; border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--ff-serif); font-size: 1.55rem; font-weight: 300; letter-spacing: .1em; }
+    .nav-logo span { color: var(--gold); }
+    nav { display: flex; align-items: center; gap: 2.2rem; }
+    nav a { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(244,239,230,.65); transition: .25s; }
+    nav a:hover, nav a.active { color: var(--gold); }
+    .nav-book { padding: .58rem 1.5rem; border: 1px solid var(--gold); color: var(--gold) !important; }
+    .nav-book:hover { background: var(--gold); color: var(--black) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--cream); }
+    .mobile-nav { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(9,9,11,.97); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: var(--ff-serif); font-size: 1.7rem; font-weight: 300; color: var(--cream); letter-spacing: .06em; transition: .2s; }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mnav-close { position: absolute; top: 1.6rem; right: 2rem; font-size: 1.8rem; color: var(--muted); cursor: pointer; background: none; border: none; }
+
+    /* Page Hero */
+    .page-hero { padding: 11rem 4rem 5rem; text-align: center; position: relative; border-bottom: 1px solid var(--border); }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,164,90,.07) 0%, transparent 70%); pointer-events: none; }
+    .page-hero .section-label { font-size: .67rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1rem; }
+    .divider { width: 44px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.3rem auto; }
+    .page-hero h1 { font-family: var(--ff-serif); font-size: clamp(3rem, 6vw, 5rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.2rem; }
+    .page-hero p { font-size: .92rem; color: var(--muted); max-width: 500px; margin: 0 auto; line-height: 1.8; }
+    .breadcrumb { display: flex; align-items: center; justify-content: center; gap: .6rem; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { color: var(--gold-dim); }
+
+    /* Main content */
+    .reserve-main { max-width: 1100px; margin: 0 auto; padding: 6rem 4rem; display: grid; grid-template-columns: 1fr 380px; gap: 5rem; align-items: start; }
+
+    /* Widget col */
+    .widget-col { position: sticky; top: 120px; }
+    .widget-wrap { background: var(--deep); border: 1px solid var(--border); padding: 2.5rem; }
+    .widget-wrap h2 { font-family: var(--ff-serif); font-size: 1.6rem; font-weight: 300; margin-bottom: .4rem; }
+    .widget-wrap p { font-size: .82rem; color: var(--muted); margin-bottom: 1.8rem; padding-bottom: 1.8rem; border-bottom: 1px solid var(--border); }
+    .widget-inner { min-height: 400px; }
+
+    /* Info col */
+    .info-col {}
+    .info-heading { font-family: var(--ff-serif); font-size: 2.2rem; font-weight: 300; line-height: 1.2; margin-bottom: 1rem; }
+    .info-heading em { font-style: italic; color: var(--gold); }
+    .info-sub { font-size: .9rem; color: var(--muted); line-height: 1.85; margin-bottom: 3rem; max-width: 460px; }
+
+    .info-cards { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 3rem; }
+    .info-card { background: var(--deep); padding: 1.4rem 1.6rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: .3s; }
+    .info-card:hover { background: var(--card); }
+    .ic-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .1rem; }
+    .ic-text strong { display: block; font-size: .85rem; font-weight: 500; color: var(--cream); margin-bottom: .15rem; }
+    .ic-text span { font-size: .81rem; color: var(--muted); line-height: 1.6; }
+    .ic-text a { color: var(--muted); transition: .2s; }
+    .ic-text a:hover { color: var(--gold); }
+
+    /* Hours */
+    .hours-block { background: var(--deep); border: 1px solid var(--border); padding: 2rem; margin-bottom: 3rem; }
+    .hours-block h3 { font-family: var(--ff-serif); font-size: 1.3rem; font-weight: 400; margin-bottom: 1.2rem; color: var(--cream); }
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table tr { border-bottom: 1px solid rgba(200,164,90,.06); }
+    .hours-table tr:last-child { border-bottom: none; }
+    .hours-table td { padding: .5rem 0; font-size: .83rem; }
+    .hours-table td:first-child { color: var(--muted); width: 130px; }
+    .hours-table td:last-child { color: var(--cream); }
+    .hours-note { font-size: .75rem; color: var(--muted); margin-top: .8rem; padding-top: .8rem; border-top: 1px solid var(--border); }
+
+    /* Policies */
+    .policy-list { display: flex; flex-direction: column; gap: .6rem; }
+    .policy-item { display: flex; gap: .8rem; font-size: .82rem; color: rgba(244,239,230,.65); align-items: flex-start; }
+    .policy-item::before { content: ''; width: 5px; height: 1px; background: var(--gold); flex-shrink: 0; margin-top: .65rem; }
+
+    /* Alt contact */
+    .alt-contact { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .alt-contact p { font-size: .82rem; color: var(--muted); margin-bottom: 1rem; }
+    .alt-btns { display: flex; gap: .8rem; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: .7rem 1.8rem; font-family: var(--ff-sans); font-size: .68rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; transition: .3s; cursor: pointer; border: 1px solid var(--gold); color: var(--gold); background: transparent; }
+    .btn:hover { background: var(--gold); color: var(--black); }
+    .btn-wp { background: #25d366; border-color: #25d366; color: #fff; display: inline-flex; align-items: center; gap: .5rem; }
+    .btn-wp:hover { background: #1fb855; border-color: #1fb855; color: #fff; }
+
+    /* Footer */
+    footer { background: var(--deep); border-top: 1px solid var(--border); padding: 5rem 4rem 0; }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 4rem; }
+    .footer-logo { font-family: var(--ff-serif); font-size: 1.7rem; font-weight: 300; margin-bottom: 1rem; }
+    .footer-logo span { color: var(--gold); }
+    .footer-col h4 { font-size: .67rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .footer-col a, .footer-col p { display: block; font-size: .82rem; color: var(--muted); margin-bottom: .5rem; line-height: 1.7; transition: .2s; }
+    .footer-col a:hover { color: var(--cream); }
+    .footer-badges { display: flex; align-items: center; justify-content: space-between; padding: 2rem 0; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 1.5rem; }
+    .badge-group { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .badge { display: flex; align-items: center; gap: .6rem; }
+    .badge-icon { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .9rem; }
+    .badge-text { font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .halal-badge .badge-icon { color: #2d8a4e; border-color: rgba(45,138,78,.3); }
+    .social-links { display: flex; align-items: center; gap: 1rem; }
+    .social-link { width: 38px; height: 38px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: .3s; color: var(--muted); }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(200,164,90,.08); }
+    .social-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.05); padding: 1.8rem 0 2.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p, .footer-bottom a { font-size: .71rem; color: rgba(136,136,127,.45); transition: .2s; }
+    .footer-bottom a:hover { color: var(--muted); }
+
+    /* Reveal animations */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all .8s cubic-bezier(.215,.61,.355,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media(max-width:1000px) {
+      header { padding: 1.2rem 2rem; } header.scrolled { padding: .9rem 2rem; }
+      nav { display: none; } .hamburger { display: flex; }
+      .page-hero { padding: 9rem 2rem 4rem; }
+      .reserve-main { grid-template-columns: 1fr; padding: 4rem 2rem; gap: 3rem; }
+      .widget-col { position: static; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      footer { padding: 4rem 2rem 0; }
+    }
+    @media(max-width:580px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mnav-close" onclick="toggleNav()">&#10005;</button>
+  <a href="index.html">Home</a><a href="array-menus-hub.html">Menu</a><a href="array-our-story.html">Our Story</a>
+  <a href="array-celebrate.html">Celebrate</a>
+  <a href="array-gift-cards.html">Gift Cards</a><a href="array-contact.html">Contact</a>
+  <a href="array-reserve.html" class="btn active" style="margin-top:1rem">Book a Table</a>
+</div>
+
+<!-- Header -->
+<header id="mainHeader">
+  <div class="nav-logo"><a href="index.html">Array <span>&amp;</span> Brasserie</a></div>
+  <nav>
+    <a href="array-menus-hub.html">Menu</a><a href="array-our-story.html">Our Story</a>
+    <a href="array-celebrate.html">Celebrate</a><a href="array-gift-cards.html">Gift Cards</a><a href="array-contact.html">Contact</a>
+    <a href="array-reserve.html" class="nav-book active">Reserve a Table</a>
+  </nav>
+  <div class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</header>
+
+<!-- Page Hero -->
+<section class="page-hero">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <span style="color:var(--cream)">Reserve a Table</span>
+  </div>
+  <span class="section-label">Book Your Experience</span>
+  <div class="divider"></div>
+  <h1>Reserve <em style="font-style:italic;color:var(--gold)">Your Table</em></h1>
+  <p>Join us for an unforgettable dining experience. Select your date, time and party size below to secure your reservation.</p>
+</section>
+
+<!-- Main -->
+<div class="reserve-main">
+
+  <!-- Info Column -->
+  <div class="info-col reveal">
+    <h2 class="info-heading">A Table Awaits<br><em>Your Arrival</em></h2>
+    <p class="info-sub">Whether it's a casual lunch, a special celebration or a business dinner — we look forward to welcoming you to Array Brasserie &amp; Grill.</p>
+
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="ic-icon">📍</div>
+        <div class="ic-text">
+          <strong>Address</strong>
+          <span>91 Shepherds Hill, Romford, RM3 0NP, Essex</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">📞</div>
+        <div class="ic-text">
+          <strong>Phone</strong>
+          <span><a href="tel:01708205332">01708 205 332</a></span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🅿️</div>
+        <div class="ic-text">
+          <strong>Parking</strong>
+          <span>On-site car park available — first come, first served. No spaces can be guaranteed on busy evenings.</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-icon">🚆</div>
+        <div class="ic-text">
+          <strong>By Train</strong>
+          <span>Harold Wood station (Elizabeth line) — short taxi or bus ride away.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hours-block">
+      <h3>Opening Hours</h3>
+      <table class="hours-table">
+        <tr><td>Monday</td><td>11:30am – 11:00pm</td></tr>
+        <tr><td>Tuesday</td><td>11:30am – 11:00pm</td></tr>
+        <tr><td>Wednesday</td><td>11:30am – 11:00pm</td></tr>
+        <tr><td>Thursday</td><td>11:30am – 11:00pm</td></tr>
+        <tr><td>Friday</td><td>11:30am – 12:00am</td></tr>
+        <tr><td>Saturday</td><td>11:30am – 12:00am</td></tr>
+        <tr><td>Sunday</td><td>11:30am – 10:00pm</td></tr>
+      </table>
+      <p class="hours-note">Last food orders taken 1.5 hours before closing. Hours may vary on Bank Holidays.</p>
+    </div>
+
+    <div>
+      <p class="section-label" style="font-size:.67rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem">Good to Know</p>
+      <div class="policy-list">
+        <div class="policy-item">Tables are held for 20 minutes past the reservation time.</div>
+        <div class="policy-item">Maximum dining time is 3 hours per table.</div>
+        <div class="policy-item">A 10% service charge applies on Friday, Saturday, Sunday and Bank Holidays, and for all parties of 4 or more.</div>
+        <div class="policy-item">For groups of 8 or more, please contact us directly.</div>
+        <div class="policy-item">We cater for all dietary requirements — please inform us at the time of booking.</div>
+        <div class="policy-item">Maximum 2 payment methods per table.</div>
+      </div>
+    </div>
+
+    <div class="alt-contact">
+      <p>Prefer to book another way? We're happy to help.</p>
+      <div class="alt-btns">
+        <a href="tel:01708205332" class="btn">📞 Call Us</a>
+        <a href="https://wa.me/447459719703" target="_blank" class="btn btn-wp">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a href="array-celebrate.html" class="btn">🎉 Private Event</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Widget Column -->
+  <div class="widget-col reveal">
+    <div class="widget-wrap">
+      <h2>Book a Table</h2>
+      <p>Select your preferred date, time and party size to check availability.</p>
+      <div class="widget-inner">
+        <script type='text/javascript' src='//www.opentable.co.uk/widget/reservation/loader?rid=373521&type=standard&theme=tall&color=8&dark=false&iframe=true&domain=couk&lang=en-GB&newtab=false&ot_source=Restaurant%20website&font=brandonText&ot_logo=subtle&primary_color=ffffff&primary_font_color=333333&button_color=9c694c&button_font_color=ffffff&logo_pid=71206402&background_pid=70951184&cfe=true'></script>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="reveal">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">Array <span>&amp;</span> Brasserie</div>
+      <p>Modern Mediterranean dining in the heart of Essex. Where every detail is crafted to create an unforgettable experience.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="index.html">Home</a><a href="array-menus-hub.html">Our Menu</a><a href="array-our-story.html">Our Story</a>
+      <a href="index.html#experiences">Customer Experiences</a><a href="array-celebrate.html">Private Hire</a><a href="array-gift-cards.html">Gift Cards</a>
+    </div>
+    <div class="footer-col">
+      <h4>Visit Us</h4>
+      <p>Array Brasserie &amp; Grill</p><p>Essex, United Kingdom</p>
+      <p style="margin-top:.8rem">Mon&ndash;Thu: 12pm &ndash; 10pm</p>
+      <p>Fri&ndash;Sat: 12pm &ndash; 11pm</p><p>Sunday: 12pm &ndash; 9pm</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="tel:01708205332">01708 205 332</a>
+      <a href="mailto:info@arrayessex.com">Email Us</a>
+      <a href="array-reserve.html">Reserve a Table</a>
+      <a href="array-celebrate.html">Private Hire Enquiry</a>
+      <a href="array-terms.html">Terms &amp; Conditions</a>
+    </div>
+  </div>
+
+  <!-- Badges + Socials -->
+  <div class="footer-badges">
+    <div class="badge-group">
+      <!-- Halal Badge -->
+      <div class="badge halal-badge">
+        <div class="badge-icon" style="font-family:var(--ff-sans);font-size:.55rem;font-weight:500;letter-spacing:.05em;color:#2d8a4e;border-color:rgba(45,138,78,.3)">HALAL</div>
+        <div class="badge-text">Halal Certified</div>
+      </div>
+      <!-- Food Hygiene -->
+      <div class="badge">
+        <div class="badge-icon" style="color:var(--gold)">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="badge-text">Food Hygiene Rated</div>
+      </div>
+      <!-- Health & Safety -->
+      <div class="badge">
+        <div class="badge-icon" style="color:var(--gold)">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <div class="badge-text">Health &amp; Safety Compliant</div>
+      </div>
+      <!-- OpenTable -->
+      <div class="badge">
+        <div class="badge-icon" style="color:#da3743;font-size:.65rem;font-weight:600;letter-spacing:.04em">OT</div>
+        <div class="badge-text">Book via OpenTable</div>
+      </div>
+    </div>
+
+    <!-- Social Links -->
+    <div class="social-links">
+      <a href="https://instagram.com/arrayessex" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://facebook.com/arrayessex" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="https://tiktok.com/@arrayessex" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+      </a>
+      <a href="https://tripadvisor.com" target="_blank" rel="noopener" class="social-link" aria-label="TripAdvisor">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm5.5 7.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm-8.5 0a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM12 17c-2.33 0-4.386-1.27-5.5-3.164A6.495 6.495 0 0112 15.5a6.495 6.495 0 015.5-1.664C16.386 15.73 14.33 17 12 17z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom -->
+  <div class="footer-bottom">
+    <p>&copy; 2025 Array Brasserie &amp; Grill. All rights reserved.</p>
+    <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+      <a href="array-terms.html#privacy">Privacy Policy</a>
+      <a href="array-terms.html">Terms &amp; Conditions</a>
+      <a href="array-terms.html#allergens">Allergen Information</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header scroll
+  const hdr = document.getElementById('mainHeader');
+  window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 60));
+
+  // Mobile nav
+  function toggleNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold: 0.1});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
