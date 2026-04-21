@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>emailjs.init('o0agOspuUZEL7XCKM');</script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -180,7 +182,7 @@
 <header id="mainHeader">
   <div class="nav-logo"><a href="index.html">Array <span>&amp;</span> Brasserie</a></div>
   <nav>
-    <a href="array-menus-hub.html">Menu</a><a href="array-our-story.html">Our Story</a>
+    <a href="index.html">Home</a><a href="array-menus-hub.html">Menu</a><a href="array-our-story.html">Our Story</a>
     <a href="array-celebrate.html">Celebrate</a><a href="array-gift-cards.html">Gift Cards</a><a href="array-contact.html" class="active">Contact</a>
     <a href="array-reserve.html" class="nav-book">Reserve a Table</a>
   </nav>
@@ -509,22 +511,33 @@
   }, {threshold: 0.1});
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  // Form submit
+  // Form submit — EmailJS
   function submitForm(e) {
     e.preventDefault();
     var form = document.getElementById('contactForm');
     var data = new FormData(form);
-    var subject = '[Array Website] ' + (data.get('subject') || 'General Enquiry');
-    var body = [
-      'Name: ' + (data.get('first_name') || '') + ' ' + (data.get('last_name') || ''),
-      'Email: ' + (data.get('email') || ''),
-      'Phone: ' + (data.get('phone') || ''),
-      'Subject: ' + (data.get('subject') || ''),
-      'Message: ' + (data.get('message') || '')
-    ].join('\n');
-    window.location.href = 'mailto:info@arrayessex.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    document.getElementById('contactForm').style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    var templateParams = {
+      first_name:  data.get('first_name') || '',
+      last_name:   data.get('last_name') || '',
+      from_email:  data.get('email') || '',
+      phone:       data.get('phone') || '',
+      subject:     data.get('subject') || '',
+      message:     data.get('message') || ''
+    };
+
+    emailjs.send('service_85z024n', 'template_u3zuhib', templateParams)
+      .then(function() {
+        form.style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      }, function(error) {
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
+        alert('Sorry, something went wrong. Please try again or contact us directly.\nError: ' + JSON.stringify(error));
+      });
   }
 </script>
 </body>
