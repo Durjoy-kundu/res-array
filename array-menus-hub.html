@@ -27,18 +27,16 @@
     /* ── HEADER ── */
     header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 4rem;transition:.4s}
     header.scrolled{background:rgba(9,9,11,.96);backdrop-filter:blur(14px);padding:1rem 4rem;border-bottom:1px solid var(--border)}
-    .nav-logo{font-family:var(--ff-serif);font-size:1.55rem;font-weight:300;letter-spacing:.1em}
-    .nav-logo span{color:var(--gold)}
+    .nav-logo img { height: 48px; width: auto; display: block }
     nav{display:flex;align-items:center;gap:2.2rem}
     nav a{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,239,230,.65);transition:.25s}
     nav a:hover,nav a.active{color:var(--gold)}
-    .nav-book{padding:.58rem 1.5rem;border:1px solid var(--gold);color:var(--gold)!important;transition:.25s!important}
-    .nav-book:hover{background:var(--gold);color:var(--black)!important}
+    .nav-book{padding:.58rem 1.5rem;border:1px solid var(--gold);background:var(--gold);color:var(--black)!important}
     .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
     .hamburger span{display:block;width:24px;height:1px;background:var(--cream)}
 
     /* ── HERO ── */
-    .hero{position:relative;height:70vh;min-height:480px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;margin-top:62px}
+    .hero{position:relative;height:70vh;min-height:480px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
     .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.28)}
     .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(9,9,11,.92))}
     .hero-content{position:relative;z-index:2;padding:0 2rem}
@@ -103,8 +101,7 @@
     /* ── FOOTER ── */
     footer{background:#070709;border-top:1px solid var(--border);padding:5rem 4rem 0}
     .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:4rem}
-    .footer-logo{font-family:var(--ff-serif);font-size:1.6rem;font-weight:300;letter-spacing:.1em;color:var(--cream);margin-bottom:1rem}
-    .footer-logo span{color:var(--gold)}
+    .footer-logo img { height: 52px; width: auto; display: block; margin-bottom: 1rem }
     .footer-brand p{font-size:.81rem;color:var(--muted);line-height:1.8}
     .footer-col h4{font-size:.63rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem}
     .footer-col a,.footer-col p{display:block;font-size:.81rem;color:var(--muted);margin-bottom:.6rem;transition:.2s;line-height:1.6}
@@ -175,7 +172,7 @@
 
 <!-- Header -->
 <header id="mainHeader">
-  <div class="nav-logo"><a href="index.html">Array <span>&amp;</span> Brasserie</a></div>
+  <div class="nav-logo"><a href="index.html"><img src="images/mainlogo.png" alt="Array Brasserie &amp; Grill" /></a></div>
   <nav>
     <a href="index.html">Home</a><a href="array-menus-hub.html" class="active">Menu</a><a href="array-our-story.html">Our Story</a>
     <a href="array-celebrate.html">Celebrate</a><a href="array-gift-cards.html">Gift Cards</a><a href="array-contact.html">Contact</a>
@@ -363,7 +360,7 @@
 <footer>
   <div class="footer-grid">
     <div>
-      <div class="footer-logo">Array <span>&amp;</span> Brasserie</div>
+      <div class="footer-logo"><img src="images/mainlogo.png" alt="Array Brasserie &amp; Grill" /></div>
       <p style="font-size:.81rem;color:var(--muted);line-height:1.8">Modern Mediterranean dining in the heart of Essex. Where every detail is crafted to create an unforgettable experience.</p>
     </div>
     <div class="footer-col">
