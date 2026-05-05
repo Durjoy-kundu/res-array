@@ -373,7 +373,8 @@
       margin-left: .4rem
     }
 
-    .item-name .itag {
+    .item-name .itag,
+    .item-sm-name .itag {
       font-size: .52rem;
       letter-spacing: .1em;
       color: var(--gold);
@@ -991,6 +992,7 @@
       <button class="tab-btn" onclick="showTab('lunch')">Lunch Menu</button>
       <button class="tab-btn" onclick="showTab('brunch')">Brunch</button>
       <button class="tab-btn" onclick="showTab('party')">Party Menu</button>
+      <button class="tab-btn" onclick="showTab('sunday')">Sunday Roast</button>
     </div>
   </div>
 
@@ -2042,6 +2044,77 @@
     </div>
   </div>
 
+  <!-- ═══════════════════ SUNDAY ROAST ═══════════════════ -->
+  <div id="tab-sunday" class="menu-section">
+    <div class="sec-intro reveal">
+      <h2>Sunday Roast</h2>
+      <p>Served every Sunday &mdash; traditional roasts crafted with the finest ingredients &amp; all the trimmings.</p>
+    </div>
+
+    <div class="split-section">
+      <div>
+
+        <!-- ROASTS -->
+        <div class="cat-header">
+          <h3>Roasts</h3>
+        </div>
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:1.2rem;font-style:italic">All roasts served with Yorkshire pudding, duck fat roast potatoes, seasonal roasted vegetables &amp; homemade gravy.</p>
+        <div class="items-grid single reveal">
+          <div class="item">
+            <div class="item-left">
+              <div class="item-name">Roast Chicken Breast</div>
+              <div class="item-desc">Butter roasted breast, Yorkshire pudding, duck fat roast potatoes, seasonal roasted vegetables &amp; homemade gravy</div>
+            </div>
+            <div class="item-price">£21</div>
+          </div>
+          <div class="item">
+            <div class="item-left">
+              <div class="item-name">Roast Lamb</div>
+              <div class="item-desc">Slow cooked lamb shank, Yorkshire pudding, duck fat roast potatoes, seasonal roasted vegetables &amp; homemade gravy</div>
+            </div>
+            <div class="item-price">£23</div>
+          </div>
+          <div class="item">
+            <div class="item-left">
+              <div class="item-name">Roast Wagyu Rib-Eye</div>
+              <div class="item-desc">Slow cooked rib-eye, Yorkshire pudding, duck fat roast potatoes, seasonal roasted vegetables &amp; homemade gravy</div>
+            </div>
+            <div class="item-price">£25</div>
+          </div>
+        </div>
+
+        <!-- KIDS -->
+        <div class="cat-header" style="margin-top:2.5rem">
+          <h3>Kids</h3>
+        </div>
+        <div class="items-grid single reveal">
+          <div class="item">
+            <div class="item-left">
+              <div class="item-name">Small Kids Option</div>
+              <div class="item-desc">Available with option of 1 meat</div>
+            </div>
+            <div class="item-price">£13</div>
+          </div>
+        </div>
+
+        <!-- SIDES -->
+        <div class="cat-header" style="margin-top:2.5rem">
+          <h3>Sides</h3>
+        </div>
+        <div class="items-sm reveal">
+          <div class="item-sm"><span class="item-sm-name">Roasted Vegetables <span class="itag">V</span></span><span class="item-sm-price">£7</span></div>
+          <div class="item-sm"><span class="item-sm-name">Mashed Potatoes <span class="itag">D</span></span><span class="item-sm-price">£5</span></div>
+          <div class="item-sm"><span class="item-sm-name">Hand Cut Chips</span><span class="item-sm-price">£5</span></div>
+          <div class="item-sm"><span class="item-sm-name">Steamed Broccoli <span class="itag">V</span></span><span class="item-sm-price">£5</span></div>
+          <div class="item-sm"><span class="item-sm-name">Grilled Asparagus <span class="itag">V</span></span><span class="item-sm-price">£6</span></div>
+          <div class="item-sm"><span class="item-sm-name">Duck Fat Roast Potatoes <span class="itag">D</span></span><span class="item-sm-price">£6</span></div>
+          <div class="item-sm"><span class="item-sm-name">Mac &amp; Cheese <span class="itag">D</span><span class="itag">E</span><span class="itag">G</span></span><span class="item-sm-price">£8</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- Allergen Footer -->
   <div class="menu-allergen-footer">
     <p><strong>[V]</strong> Suitable Vegetarian &nbsp;|&nbsp; <strong>[VF]</strong> Vegan Friendly &nbsp;|&nbsp;
@@ -2081,12 +2154,12 @@
       </div>
       <div class="footer-col">
         <h4>Visit Us</h4>
-        <p>91 Shepherds Hill</p>
-        <p>Romford, RM3 0NP</p>
-        <p style="margin-top:.8rem">Mon–Thu: 11:30am – 11pm</p>
-        <p>Fri–Sat: 11:30am – 12am</p>
-        <p>Sun: 11:30am – 10pm</p>
-      </div>
+        <p>Array Brasserie &amp; Grill</p>
+        <p>Essex, United Kingdom</p>
+        <p style="margin-top:.8rem">Mon&ndash;Thu: 11:30am &ndash; 11pm</p>
+        <p>Fri&ndash;Sat: 11:30am &ndash; 12am</p>
+        <p>Sunday: 11:30am &ndash; 10pm</p>
+    </div>
       <div class="footer-col">
         <h4>Contact</h4>
         <a href="tel:01708205332">01708 205 332</a>
@@ -2170,7 +2243,7 @@
 
     <!-- Bottom -->
     <div class="footer-bottom">
-      <p>&copy; 2025 Array Brasserie &amp; Grill. All rights reserved.</p>
+      <p>&copy; 2026 Array Brasserie &amp; Grill. All rights reserved.</p>
       <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
         <a href="array-terms.html#privacy">Privacy Policy</a>
         <a href="array-terms.html">Terms &amp; Conditions</a>
